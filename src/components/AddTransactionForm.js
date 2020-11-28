@@ -7,8 +7,8 @@ export const AddTransactionForm = (props) => {
     const [transaction, setTransaction] = useState('');
     const [amount, setAmount] = useState(0);
     const [accountType, setAccountType] = useState(0);
-    const context = useContext(AccountContext.accountInfo);
-    console.log(context)
+    // const context = useContext(AccountContext.accountInfo);
+    // console.log(context)
     // setAccountType(context.accountInfo);
     return (
         <div>

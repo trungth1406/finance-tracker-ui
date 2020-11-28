@@ -1,4 +1,5 @@
 import React, {createContext, useState} from 'react';
+import {TransactionList} from "./TransactionList";
 
 
 export const IncomeExpense = function (props) {
@@ -9,36 +10,38 @@ export const IncomeExpense = function (props) {
         changeAccount: function (event) {
             setSelect(!selectToggler);
             setAccount(event.target);
-            AccountContext.accountInfo = currentAccount;
-            console.log(AccountContext.accountInfo)
         }
     }
     return (<>
-        <div className={`tile box`} onClick={ActionHandler.changeAccount}>
+        <div className={`is-parent box  `} onClick={ActionHandler.changeAccount}>
+            <h4 className="title">{props.account.name}</h4>
             <article className={`tile is-parent notification ${selectToggler === true ? 'is-warning' : ''}`}>
-                <div className="column is-parent is-6">
-                    <div className="column  is-success">
+                <div className="tile is-parent is-6">
+                    <div className="is-child is-success">
                         <article className="message is-success">
                             <div className="message-header ">
-                                <p className="title  is-4 ">IN</p>
+                                <p className="subtitle is-4">REMAIN</p>
                             </div>
                             <div className="message-body">
+                                <p>+ {props.account.current_amount} </p>
                             </div>
                         </article>
                     </div>
                 </div>
-                <div className=" column is-parent is-6 ">
-                    <div className=" column  is-danger ">
+                <div className=" tile is-parent is-6 ">
+                    <div className=" is-child is-danger ">
                         <article className="message is-danger">
                             <div className="message-header is-danger">
-                                <p className="title  is-4 "><strong>OUT</strong></p>
+                                <p className="subtitle  is-4 ">SPENT</p>
                             </div>
                             <div className="message-body">
+                                <p>{props.account.remain_amount}</p>
                             </div>
                         </article>
                     </div>
                 </div>
             </article>
+            <TransactionList/>
         </div>
     </>);
 

@@ -3,7 +3,7 @@ import { Transaction } from './Transaction'
 
 export const TransactionList = () => {
     return (
-        <div>
+        <div className="is-parent">
             <h3 className="title is-4">Transaction history</h3>
             <div className="box">
                 <Transaction />
