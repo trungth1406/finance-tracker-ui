@@ -5,7 +5,7 @@ import {AccountContext} from "./account-context";
 
 export const Account = function (props) {
 
-    return (<div className="tile parent">
+    return (<div className="column is-child is-desktop">
         <IncomeExpense account={props.account}/>
     </div>)
 }

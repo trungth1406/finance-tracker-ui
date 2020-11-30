@@ -2,19 +2,21 @@ import axios from "axios";
 
 export const BaseHandler = {
     baseUrl: 'http://127.0.0.1:8000',
-    apiRequest: function (uri, fnCallback) {
+    getRequest: function (uri, fnCallback) {
         return axios.get(this.baseUrl + uri).then((response) => {
             return fnCallback(response.data)
         });
+    },
+    postRequest: function () {
     }
 }
 
 
-export const AccountHandler = function (fnCallback) {
-    this.accURI = '/api/accounts/'
+export const AccountHandler = function (fnCallback, id) {
+    this.accURI = '/api/resources/' + id + '/related-accounts/'
     this.callBackName = fnCallback
     return {
-        req: this.apiRequest.bind(this, this.accURI, this.callBackName)
+        dispatchRequest: this.getRequest.bind(this, this.accURI, this.callBackName)
     }
 }
 
@@ -22,6 +24,6 @@ export const AccountResourceHandler = function (fnCallback) {
     this.accResourceUrl = '/api/resources/'
     this.callBackName = fnCallback
     return {
-        req: this.apiRequest.bind(this, this.accResourceUrl, this.callBackName)
+        dispatchRequest: this.getRequest.bind(this, this.accResourceUrl, this.callBackName)
     }
 }

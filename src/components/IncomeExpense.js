@@ -13,41 +13,43 @@ export const IncomeExpense = function (props) {
         }
     }
     return (<>
-        <div className={`is-parent box  `} onClick={ActionHandler.changeAccount}>
-            <h4 className="title">{props.account.name}</h4>
-            <article className={`tile is-parent notification ${selectToggler === true ? 'is-warning' : ''}`}>
-                <div className="tile is-parent is-6">
-                    <div className="is-child is-success">
-                        <article className="message is-success">
-                            <div className="message-header ">
-                                <p className="subtitle is-4">REMAIN</p>
-                            </div>
-                            <div className="message-body">
-                                <p>+ {props.account.current_amount} </p>
-                            </div>
-                        </article>
+            <div className={`tile is-child `} onClick={ActionHandler.changeAccount}>
+                <div className="card">
+                    <header className="card-header has-text-centered">
+                        <p className="card-header-title ">
+                            {props.account.name.toUpperCase()}
+                        </p>
+                    </header>
+
+                    <div className="card-content">
+                        <div className=" content ">
+                            <nav className="level">
+                                <div className="level-item  has-text-centered">
+                                    <div>
+                                        <p className="heading has-text-success">Remain</p>
+                                        <p className="title is-4 ">{props.account.remain_amount}</p>
+                                    </div>
+                                </div>
+                                <div className="level-item  has-text-centered">
+                                    <div>
+                                        <p className="heading has-text-danger">Spent</p>
+                                        <p className="title is-4 ">{props.account.current_amount}</p>
+                                    </div>
+                                </div>
+                            </nav>
+                        </div>
                     </div>
+                    <footer className="card-footer">
+                        <p className="card-footer-item has-text-primary ">
+                             New Transaction
+                        </p>
+                        <p className="card-footer-item has-text-info ">
+                            Transaction history
+                        </p>
+                    </footer>
                 </div>
-                <div className=" tile is-parent is-6 ">
-                    <div className=" is-child is-danger ">
-                        <article className="message is-danger">
-                            <div className="message-header is-danger">
-                                <p className="subtitle  is-4 ">SPENT</p>
-                            </div>
-                            <div className="message-body">
-                                <p>{props.account.remain_amount}</p>
-                            </div>
-                        </article>
-                    </div>
-                </div>
-            </article>
-            <TransactionList/>
-        </div>
-    </>);
+            </div>
+        </>
+    )
 
 }
-
-
-export const AccountContext = createContext({
-    accountInfo: null
-})
