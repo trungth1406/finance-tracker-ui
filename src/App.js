@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Header} from "./components/Header";
-import {Account} from "./components/Account";
-import {AddTransactionForm} from "./components/AddTransactionForm";
 import './index.css'
-import {AccountHandler, AccountResourceHandler, BaseHandler} from './services/accountservices'
+import {AccountResourceHandler, BaseHandler} from './services/accountservices'
 import {AccountResource} from "./components/AccountResource";
 import {AddResource} from "./components/AddResource";
 

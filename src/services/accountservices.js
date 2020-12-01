@@ -7,7 +7,10 @@ export const BaseHandler = {
             return fnCallback(response.data)
         });
     },
-    postRequest: function () {
+    postRequest: function (uri, body, fnCallback) {
+        return axios.post(this.baseUrl + uri, body).then(response => {
+            return fnCallback(response)
+        })
     }
 }
 

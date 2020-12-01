@@ -18,17 +18,23 @@ export const AccountResource = function (props) {
                         <div className="level-item level-left has-text-centered">
                             <p className="title">{props.accountResource.name}</p>
                         </div>
-                        <nav className="level">
+                        <nav className="level-left">
                             <div className="level-item  has-text-centered">
                                 <div>
-                                    <p className="heading">Total amount</p>
+                                    <p className="heading ">Total amount</p>
+                                    <p className="title is-4">{props.accountResource.total_amount}</p>
+                                </div>
+                            </div>
+                            <div className="level-item  has-text-centered">
+                                <div>
+                                    <p className="heading ">Remain amount</p>
                                     <p className="title is-4">{props.accountResource.total_amount}</p>
                                 </div>
                             </div>
                             <div className="level-item  has-text-centered">
                                 <div>
                                     <p className="heading">Total accounts</p>
-                                    <p className="title is-4 ">{accounts.length}</p>
+                                    <p className="title is-4 ">{props.accountResource.total_accounts}</p>
                                 </div>
                             </div>
 
