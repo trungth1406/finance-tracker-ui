@@ -2,9 +2,13 @@ import axios from "axios";
 
 export const BaseHandler = {
     baseUrl: 'http://127.0.0.1:8000',
-    getRequest: function (uri, fnCallback) {
-        return axios.get(this.baseUrl + uri).then((response) => {
-            return fnCallback(response.data)
+    getRequest: async function (uri, fnCallback) {
+        return await axios.get(this.baseUrl + uri).then((response) => {
+            if (fnCallback === undefined) {
+                return response.data
+            } else {
+                return fnCallback(response.data)
+            }
         });
     },
     postRequest: function (uri, body, fnCallback) {
