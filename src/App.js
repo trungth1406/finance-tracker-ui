@@ -3,17 +3,18 @@ import {Header} from "./components/Header";
 import './index.css'
 import {AccountResource} from "./components/AccountResource";
 import {AddResource} from "./components/AddResource";
-import {useStore} from 'react-redux'
+import {useDispatch, useSelector, useStore} from 'react-redux'
+import store from "./redux/stores/resourceStore";
 
-export const App = function () {
-    const store = useStore()
+export const App = function (props) {
+    const store = useSelector((state) => state.sourceReducer)
     return (
         <div>
             <Header/>
             <div className="resources container">
                 <div className="control is-ancestor">
                     <AddResource/>
-                    {store.getState()['sourceReducer'].map((item, index) => {
+                    {store.map((item, index) => {
                         return <AccountResource accountResource={item}/>
                     })}
                 </div>

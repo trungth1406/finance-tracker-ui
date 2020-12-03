@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {useForm} from "react-hook-form";
 import {CreateResource} from '../services/resourceservices'
 import {BaseHandler} from "../services/accountservices";
+import {addNewResource} from "../redux/actions/resourceAction";
 
 
 export const AddResourceForm = function (props) {
@@ -10,8 +11,11 @@ export const AddResourceForm = function (props) {
 
 
     const onSubmit = (data) => {
-        const createNewResource = CreateResource.call(BaseHandler, data, (res) => {
-            console.log(res)
+        const createNewResource = CreateResource.call(BaseHandler, data, function (res) {
+            return dispatch => {
+                console.log(res)
+                dispatch(addNewResource(res))
+            }
         })
         createNewResource.sendPost();
     }
