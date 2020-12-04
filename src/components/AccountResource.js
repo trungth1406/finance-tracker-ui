@@ -10,42 +10,60 @@ export const AccountResource = function (props) {
     const accountHandler = AccountHandler.call(BaseHandler, setAccounts, props.accountResource.id);
     const dividedAccounts = accountDivider(accounts);
     return (
-        <>
-            <div id={props.accountResource.id} className="card is-parent box">
-                <article className="card is-child notification is-primary"
-                         onClick={() => toggleAccounts(setAccountHidden, setAccounts, isAccountHidden, accountHandler)}>
-                    <div className="level">
-                        <div className="level-item level-left has-text-centered">
-                            <p className="title">{props.accountResource.name}</p>
+        <div>
+            <div id={props.accountResource.id} className="card is-parent box "
+                 onMouseOver={(e) => console.log(e)}>
+                <div className="columns">
+                    <article className="card is-child notification is-primary column is-11 "
+                             onClick={() => toggleAccounts(setAccountHidden, setAccounts, isAccountHidden, accountHandler)}>
+                        <div className="level">
+                            <div className="level-item level-left has-text-centered">
+                                <p className="title">{props.accountResource.name}</p>
+                            </div>
+                            <nav className="level-left">
+                                <div className="level-item  has-text-centered">
+                                    <div>
+                                        <p className="heading ">Total amount</p>
+                                        <p className="title is-4">{props.accountResource.total_amount}</p>
+                                    </div>
+                                </div>
+                                <div className="level-item  has-text-centered">
+                                    <div>
+                                        <p className="heading ">Remain amount</p>
+                                        <p className="title is-4">{props.accountResource.total_amount}</p>
+                                    </div>
+                                </div>
+                                <div className="level-item  has-text-centered">
+                                    <div>
+                                        <p className="heading">Total accounts</p>
+                                        <p className="title is-4 ">{props.accountResource.total_accounts}</p>
+                                    </div>
+                                </div>
+                            </nav>
                         </div>
-                        <nav className="level-left">
-                            <div className="level-item  has-text-centered">
-                                <div>
-                                    <p className="heading ">Total amount</p>
-                                    <p className="title is-4">{props.accountResource.total_amount}</p>
-                                </div>
-                            </div>
-                            <div className="level-item  has-text-centered">
-                                <div>
-                                    <p className="heading ">Remain amount</p>
-                                    <p className="title is-4">{props.accountResource.total_amount}</p>
-                                </div>
-                            </div>
-                            <div className="level-item  has-text-centered">
-                                <div>
-                                    <p className="heading">Total accounts</p>
-                                    <p className="title is-4 ">{props.accountResource.total_accounts}</p>
-                                </div>
-                            </div>
 
-                        </nav>
-                    </div>
-
-                </article>
+                    </article>
+                    <article className="card is-child notification is-primary column">
+                        <div>
+                            <p className="buttons">
+                                <button className="button is-primary">
+                                            <span className="icon is-small">
+                                                <i className="fas fa-edit"/>
+                                            </span>
+                                </button>
+                                <button className="button is-primary">
+                                            <span className="icon is-small">
+                                                <i className="fas fa-trash"/>
+                                            </span>
+                                </button>
+                            </p>
+                        </div>
+                    </article>
+                </div>
                 {dividedAccounts}
-
             </div>
-        </>
+
+        </div>
     );
 }
 

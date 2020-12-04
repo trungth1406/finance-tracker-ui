@@ -2,8 +2,8 @@ import axios from "axios";
 
 export const BaseHandler = {
     baseUrl: 'http://127.0.0.1:8000',
-    getRequest:  function (uri, fnCallback) {
-        return  axios.get(this.baseUrl + uri).then((response) => {
+    getRequest: function (uri, fnCallback) {
+        return axios.get(this.baseUrl + uri).then((response) => {
             if (fnCallback === undefined) {
                 return response.data
             } else {
@@ -13,7 +13,11 @@ export const BaseHandler = {
     },
     postRequest: function (uri, body, fnCallback) {
         return axios.post(this.baseUrl + uri, body).then(response => {
-            return fnCallback(response)
+            if (fnCallback === undefined) {
+                return response.data
+            } else {
+                return fnCallback(response)
+            }
         })
     }
 }

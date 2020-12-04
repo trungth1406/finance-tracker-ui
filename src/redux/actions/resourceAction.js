@@ -1,7 +1,7 @@
 import {AccountResourceHandler, BaseHandler} from "../../services/accountservices";
 
-export function addNewResource(resource) {
-    return {type: "ADD_NEW_RESOURCE", resource}
+export function addNewResource(resourceData) {
+    return {type: "ADD_NEW_RESOURCE", resourceData}
 }
 
 function fetchResourceData(resourceData) {

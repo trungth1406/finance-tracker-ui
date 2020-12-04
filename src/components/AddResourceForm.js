@@ -3,21 +3,19 @@ import {useForm} from "react-hook-form";
 import {CreateResource} from '../services/resourceservices'
 import {BaseHandler} from "../services/accountservices";
 import {addNewResource} from "../redux/actions/resourceAction";
+import {useDispatch, useSelector} from "react-redux";
 
 
 export const AddResourceForm = function (props) {
     const [showThis, setShowThis] = useState(true)
     const {register, handleSubmit, errors} = useForm();
 
-
-    const onSubmit = (data) => {
-        const createNewResource = CreateResource.call(BaseHandler, data, function (res) {
-            return dispatch => {
-                console.log(res)
-                dispatch(addNewResource(res))
-            }
+    const dispatch = useDispatch()
+    const onSubmit = function (data) {
+        CreateResource.call(BaseHandler, data).sendPost().then(res =>  {
+            dispatch(addNewResource(res))
+            handleRemove()
         })
-        createNewResource.sendPost();
     }
 
     const handleRemove = function () {
