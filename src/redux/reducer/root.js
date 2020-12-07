@@ -1,8 +1,10 @@
 import {combineReducers} from 'redux';
 import sourceReducer from './sourceReducer'
+import sourceFormReducer from "./sourceFormReducer";
 
 const rootReducer = combineReducers({
-    sourceReducer
+    sourceReducer,
+    sourceFormReducer
 })
 
 export default rootReducer

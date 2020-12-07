@@ -1,5 +1,3 @@
-
-
 export default function sourceReducer(state = [], action) {
     switch (action.type) {
         case "ADD_NEW_RESOURCE":
@@ -10,5 +8,7 @@ export default function sourceReducer(state = [], action) {
             return state
     }
 }
+
+
 
 

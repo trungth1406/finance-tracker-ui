@@ -4,27 +4,26 @@ import {CreateResource} from '../services/resourceservices'
 import {BaseHandler} from "../services/accountservices";
 import {addNewResource} from "../redux/actions/resourceAction";
 import {useDispatch, useSelector} from "react-redux";
+import {ResourceFormAction} from "../redux/actions/formAction";
 
 
 export const AddResourceForm = function (props) {
-    const [showThis, setShowThis] = useState(true)
     const {register, handleSubmit, errors} = useForm();
 
     const dispatch = useDispatch()
     const onSubmit = function (data) {
-        CreateResource.call(BaseHandler, data).sendPost().then(res =>  {
+        CreateResource.call(BaseHandler, data).sendPost().then(res => {
             dispatch(addNewResource(res))
-            handleRemove()
         })
     }
 
-    const handleRemove = function () {
-        setShowThis(false)
+    const onRemoveForm = function (event, index) {
+        event.preventDefault()
+        dispatch(ResourceFormAction.removeForm(index))
     }
-
-    return showThis ? (
+    return (
         <article className="card is-child notification is-primary">
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form>
                 <div className="level">
                     <nav className="level-item">
                         <div className="field">
@@ -56,18 +55,19 @@ export const AddResourceForm = function (props) {
                     </nav>
                     <nav className="level-right">
                         <div className="buttons">
-                            <button className="button is-primary is-inverted is-outlined" type="submit">
+                            <button className="button is-primary is-inverted is-outlined" type="submit"
+                                    onClick={handleSubmit(onSubmit)}>
                                 <i className="fas fa-check"/>
                             </button>
                             <button className="button is-danger is-inverted is-outlined"
-                                    onClick={(event) => handleRemove(event)}>
+                                    onClick={(event) => onRemoveForm(event, props.index)}>
                                 <i className="fa fa-trash"/>
                             </button>
                         </div>
                     </nav>
                 </div>
             </form>
-        </article>) : (<></>)
+        </article>)
 }
 
 

@@ -19,6 +19,11 @@ export const IncomeExpense = function (props) {
                         <p className="card-header-title ">
                             {props.account.name.toUpperCase()}
                         </p>
+                        <a  className="card-header-icon" aria-label="more options">
+                          <span className="icon">
+                            <i className="delete is-medium" aria-hidden="true"></i>
+                          </span>
+                        </a>
                     </header>
 
                     <div className="card-content">
@@ -41,10 +46,15 @@ export const IncomeExpense = function (props) {
                     </div>
                     <footer className="card-footer">
                         <p className="card-footer-item has-text-primary ">
-                             New Transaction
+                            <p className="has-icons-left">
+                                <p className="control is-left">
+                                    <i className="fas fa-exchange-alt is-large"/>
+                                </p>
+
+                            </p>
                         </p>
                         <p className="card-footer-item has-text-info ">
-                            Transaction history
+                            <i className="fas fa-info is-large"/>
                         </p>
                     </footer>
                 </div>

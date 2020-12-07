@@ -1,11 +1,19 @@
-import React, {Component, useState} from 'react';
+import React from 'react';
 import {AddResourceForm} from "./AddResourceForm";
+import {useDispatch, useSelector, useStore} from "react-redux";
+import {ResourceFormAction} from "../redux/actions/formAction";
+import sourceFormReducer from "../redux/reducer/sourceFormReducer";
 
 export const AddResource = function () {
-    let formArray = []
-    const [forms, setForms] = useState(formArray)
+    const formSelector = useSelector((state) => state.sourceFormReducer)
+    const dispatchForm = useDispatch()
+    const onCreateForm = function () {
+        dispatchForm(ResourceFormAction.addForm(<AddResourceForm index={formSelector.length}/>))
+    }
+
     return (<>
-        <div className="card is-parent box" onClick={() => setForms(formArray => [...formArray, <AddResourceForm />])}>
+        <div className="card is-parent box"
+             onClick={() => onCreateForm()}>
             <div className="control is-parent is-info">
                 <div className="">
                     <article className="has-text-centered">
@@ -14,6 +22,6 @@ export const AddResource = function () {
                 </div>
             </div>
         </div>
-        {forms}
+        {formSelector}
     </>);
 }

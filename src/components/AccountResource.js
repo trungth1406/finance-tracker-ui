@@ -11,10 +11,9 @@ export const AccountResource = function (props) {
     const dividedAccounts = accountDivider(accounts);
     return (
         <div>
-            <div id={props.accountResource.id} className="card is-parent box "
-                 onMouseOver={(e) => console.log(e)}>
+            <div id={props.accountResource.id} className="card is-parent box ">
                 <div className="columns">
-                    <article className="card is-child notification is-primary column is-11 "
+                    <article className="card is-child notification is-primary column"
                              onClick={() => toggleAccounts(setAccountHidden, setAccounts, isAccountHidden, accountHandler)}>
                         <div className="level">
                             <div className="level-item level-left has-text-centered">
@@ -43,24 +42,9 @@ export const AccountResource = function (props) {
                         </div>
 
                     </article>
-                    <article className="card is-child notification is-primary column">
-                        <div>
-                            <p className="buttons">
-                                <button className="button is-primary">
-                                            <span className="icon is-small">
-                                                <i className="fas fa-edit"/>
-                                            </span>
-                                </button>
-                                <button className="button is-primary">
-                                            <span className="icon is-small">
-                                                <i className="fas fa-trash"/>
-                                            </span>
-                                </button>
-                            </p>
-                        </div>
-                    </article>
                 </div>
                 {dividedAccounts}
+                <AddAccount/>
             </div>
 
         </div>
@@ -81,9 +65,6 @@ function accountDivider(accounts) {
         start = end;
         end = end + 2 >= accounts.length ? accounts.length : end + 2;
     }
-    jsxAccount.push(<div className="tile is-ancestor columns">
-        <AddAccount/>
-    </div>)
     return jsxAccount;
 }
 
