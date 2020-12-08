@@ -1,14 +1,19 @@
 import React, {Component, useState} from 'react';
 import {IncomeExpense} from "./IncomeExpense";
 import {AddAccountForm} from "./AddAccountForm";
+import { useDispatch, useSelector } from 'react-redux';
+import { AccountFormAction } from '../redux/actions/formAction';
 
-export const AddAccount = function () {
-    let initialForm = []
-    const [accountForm, setAccountForm] = useState(initialForm)
+export const AddAccount = function (props) {
+    const accountForms = useSelector((state)=> state.accountFormReducer)
+    const formDispatch = useDispatch()
+    const addFormEvent = function(){
+        formDispatch(AccountFormAction.addForm(<AddAccountForm index= {accountForms.length} resourceId = {props.resourceId}/>))
+    }
     return (<>
-        {accountForm}
+        {accountForms}
         <div className="column is-child is-desktop"
-             onClick={() => setAccountForm((initialForm) => [...initialForm, <AddAccountForm formArr={initialForm}/>])}>
+             onClick={() => addFormEvent()}>
             <div className="tile is-child ">
                 <div className="card">
                     <div className="card-content">

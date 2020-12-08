@@ -14,6 +14,7 @@ export const AddResourceForm = function (props) {
     const onSubmit = function (data) {
         CreateResource.call(BaseHandler, data).sendPost().then(res => {
             dispatch(addNewResource(res))
+            dispatch(ResourceFormAction.removeForm(props.index))
         })
     }
 

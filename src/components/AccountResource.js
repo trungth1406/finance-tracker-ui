@@ -44,7 +44,7 @@ export const AccountResource = function (props) {
                     </article>
                 </div>
                 {dividedAccounts}
-                <AddAccount/>
+                <AddAccount resourceId= {props.accountResource.id}/>
             </div>
 
         </div>

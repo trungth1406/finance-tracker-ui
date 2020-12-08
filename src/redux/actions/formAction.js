@@ -8,3 +8,16 @@ export const ResourceFormAction = {
 
 }
 
+
+export const AccountFormAction = {
+    addForm: function addNewResourceForm(data) {
+        return {type: "ADD_ACCOUNT_FORM", data}
+    },
+    removeForm: function removeResourceForm(data) {
+        return {type: "REMOVE_ACCOUNT_FORM", data};
+    }
+
+}
+
+
+

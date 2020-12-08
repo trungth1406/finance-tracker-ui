@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Header} from "./components/Header";
-import './index.css'
+import './index.sass'
 import {AccountResource} from "./components/AccountResource";
 import {AddResource} from "./components/AddResource";
 import {useSelector} from 'react-redux'
