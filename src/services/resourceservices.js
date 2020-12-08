@@ -1,6 +1,6 @@
-import {AccountResourceHandler} from "./accountservices";
+import {GetResourcesRequest} from "./accountservices";
 
-export const CreateResource = function (body, fnCallBack) {
+export const CreateNewResource = function (body, fnCallBack) {
     this.body = body
     this.fnCallBack = fnCallBack;
     return {
@@ -9,3 +9,10 @@ export const CreateResource = function (body, fnCallBack) {
 
 }
 
+export const CreateNewRelatedAccount = function (body, fnCallBack) {
+    this.body = body;
+    this.fnCallBack = fnCallBack;
+    return {
+        createNewAccount: this.postRequest.bind(this, this.relatedAccURL, this.body, this.fnCallBack)
+    }
+}

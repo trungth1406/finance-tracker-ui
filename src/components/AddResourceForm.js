@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import {useForm} from "react-hook-form";
-import {CreateResource} from '../services/resourceservices'
-import {BaseHandler} from "../services/accountservices";
-import {addNewResource} from "../redux/actions/resourceAction";
+import {CreateNewResource} from '../services/resourceservices'
+import {ResourceAction} from "../redux/actions/resourceAction";
 import {useDispatch, useSelector} from "react-redux";
 import {ResourceFormAction} from "../redux/actions/formAction";
+import {BaseRequest} from "../services/baseService";
 
 
 export const AddResourceForm = function (props) {
@@ -12,8 +12,9 @@ export const AddResourceForm = function (props) {
 
     const dispatch = useDispatch()
     const onSubmit = function (data) {
-        CreateResource.call(BaseHandler, data).sendPost().then(res => {
-            dispatch(addNewResource(res))
+        const formData = Object.assign({}, data, {remain_amount: data['total_amount']})
+        CreateNewResource.call(BaseRequest, formData).sendPost().then(res => {
+            dispatch(ResourceAction.addResource(res))
             dispatch(ResourceFormAction.removeForm(props.index))
         })
     }

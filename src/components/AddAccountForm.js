@@ -1,7 +1,12 @@
 import React from "react";
-import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { AccountFormAction } from "../redux/actions/formAction";
+import {useForm} from "react-hook-form";
+import {useDispatch} from "react-redux";
+import {AccountFormAction} from "../redux/actions/formAction";
+import {BaseRequest} from "../services/baseService";
+import {CreateNewRelatedAccount} from "../services/resourceservices";
+
+//TODO: After add new Account, refetch the data for account
+//TODO: After submit form, remove the form and refetch the resource's accounts data ( or pass it to state)
 
 
 export const AddAccountForm = function (props) {
@@ -10,11 +15,13 @@ export const AddAccountForm = function (props) {
         dispatchRemove(AccountFormAction.removeForm(props.index));
     }
 
-    const { register, handleSubmit, errors } = useForm();
+    const {register, handleSubmit, errors} = useForm();
     const onSubmitAccountForm = function (data) {
-        console.log(props.resourceId)
-        const formData = Object.assign({}, data, { resourceId: props.resourceId })
-        console.log(formData)
+        const formData = Object.assign({}, data, {resourceId: props.resourceId})
+        CreateNewRelatedAccount.call(BaseRequest, formData, undefined).createNewAccount().then(response =>{
+            console.log(response)
+        });
+        dispatchRemove(AccountFormAction.removeForm(props.index));
     }
 
     return (
@@ -24,16 +31,16 @@ export const AddAccountForm = function (props) {
                     <p className="card-header-title">
                         <div class="control has-icons-left has-icons-right">
                             <input className="input" type="text" placeholder="Account name..."
-                                name="account_name"
-                                ref={register({ required: true })} />
+                                   name="account_name"
+                                   ref={register({required: true})}/>
                             {errors.account_name &&
-                                <span className="has-text-danger">Account name is required</span>}
+                            <span className="has-text-danger">Account name is required</span>}
                             <span className="icon is-medium is-left"><i class="fas fa-piggy-bank"></i></span>
                         </div>
                     </p>
                     <a className="card-header-icon" aria-label="more options" onClick={() => onRemoveForm()}>
                         <span className="icon">
-                            <i className="delete is-medium" aria-hidden="true" />
+                            <i className="delete is-medium" aria-hidden="true"/>
                         </span>
                     </a>
                 </header>
@@ -46,11 +53,12 @@ export const AddAccountForm = function (props) {
                                     <p className="heading has-text-success">Initial Amount</p>
                                     <div class="control has-icons-left has-icons-right">
                                         <input className="input" type="text" placeholder="Enter amount..."
-                                            name="account_amount"
-                                            ref={register({ required: true })} />
+                                               name="account_amount"
+                                               ref={register({required: true})}/>
                                         {errors.account_amount &&
-                                            <span className="has-text-danger">Initial amount  is required</span>}
-                                        <span className="icon is-medium is-left"><i class="fas fa-cash-register"></i></span>
+                                        <span className="has-text-danger">Initial amount  is required</span>}
+                                        <span className="icon is-medium is-left"><i
+                                            class="fas fa-cash-register"></i></span>
                                     </div>
                                 </div>
                             </div>

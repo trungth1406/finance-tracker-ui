@@ -1,13 +1,14 @@
-import React, {useEffect, useState} from 'react'
-import {AccountHandler, AccountResourceHandler, BaseHandler} from "../services/accountservices";
+import React, {useState} from 'react'
+import {GetRelatedAccountRequest} from "../services/accountservices";
 import {Account} from "./Account";
 import {AddAccount} from "./AddAccount";
+import {BaseRequest} from "../services/baseService";
 
 
 export const AccountResource = function (props) {
     const [accounts, setAccounts] = useState([]);
     const [isAccountHidden, setAccountHidden] = useState(false);
-    const accountHandler = AccountHandler.call(BaseHandler, setAccounts, props.accountResource.id);
+    const accountHandler = GetRelatedAccountRequest.call(BaseRequest, setAccounts, props.accountResource.id);
     const dividedAccounts = accountDivider(accounts);
     return (
         <div>
@@ -44,7 +45,7 @@ export const AccountResource = function (props) {
                     </article>
                 </div>
                 {dividedAccounts}
-                <AddAccount resourceId= {props.accountResource.id}/>
+                {props.children}
             </div>
 
         </div>

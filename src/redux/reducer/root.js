@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
-import sourceReducer from './sourceReducer'
+import resourceReducer from './sourceReducer'
 import sourceFormReducer from "./sourceFormReducer";
 import accountFormReducer from "./accountFormReducer";
 
 const rootReducer = combineReducers({
-    sourceReducer,
+    sourceReducer: resourceReducer,
     sourceFormReducer,
     accountFormReducer
 })
