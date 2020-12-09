@@ -1,5 +1,4 @@
 import React, {createContext, useState} from 'react';
-import {TransactionList} from "./TransactionList";
 
 
 export const IncomeExpense = function (props) {
@@ -19,9 +18,9 @@ export const IncomeExpense = function (props) {
                         <p className="card-header-title ">
                             {props.account.name.toUpperCase()}
                         </p>
-                        <a  className="card-header-icon" aria-label="more options">
+                        <a className="card-header-icon" aria-label="more options">
                           <span className="icon">
-                            <i className="delete is-medium" aria-hidden="true"></i>
+                            <i className="delete is-medium" aria-hidden="true"/>
                           </span>
                         </a>
                     </header>
@@ -46,12 +45,10 @@ export const IncomeExpense = function (props) {
                     </div>
                     <footer className="card-footer">
                         <p className="card-footer-item has-text-primary ">
-                            <p className="has-icons-left">
-                                <p className="control is-left">
+                                <span className="control is-left">
                                     <i className="fas fa-exchange-alt is-large"/>
-                                </p>
+                                </span>
 
-                            </p>
                         </p>
                         <p className="card-footer-item has-text-info ">
                             <i className="fas fa-info is-large"/>

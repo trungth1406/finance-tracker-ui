@@ -3,13 +3,22 @@ import {GetRelatedAccountRequest} from "../services/accountservices";
 import {Account} from "./Account";
 import {AddAccount} from "./AddAccount";
 import {BaseRequest} from "../services/baseService";
+import Provider from "react-redux";
+import {accountStore} from "../redux/stores/resourceStore";
+import {IncomeExpense} from "./IncomeExpense";
+import {AccountDividerUtils} from "../utils/columnUtils";
 
 
 export const AccountResource = function (props) {
     const [accounts, setAccounts] = useState([]);
     const [isAccountHidden, setAccountHidden] = useState(false);
     const accountHandler = GetRelatedAccountRequest.call(BaseRequest, setAccounts, props.accountResource.id);
-    const dividedAccounts = accountDivider(accounts);
+
+    const reactAccounts = [];
+    accounts.forEach(account => {
+        reactAccounts.push(<Account account={account} resourceId={props.accountResource.id}/>)
+    })
+    const dividedAccounts = AccountDividerUtils.divide(reactAccounts, true);
     return (
         <div>
             <div id={props.accountResource.id} className="card is-parent box ">
@@ -30,7 +39,7 @@ export const AccountResource = function (props) {
                                 <div className="level-item  has-text-centered">
                                     <div>
                                         <p className="heading ">Remain amount</p>
-                                        <p className="title is-4">{props.accountResource.total_amount}</p>
+                                        <p className="title is-4">{props.accountResource.remain_amount}</p>
                                     </div>
                                 </div>
                                 <div className="level-item  has-text-centered">
@@ -59,7 +68,9 @@ function accountDivider(accounts) {
         const eachRow = accounts.slice(start, end);
         jsxAccount.push(<div className="tile is-ancestor columns">
                 {eachRow.map((account, id) => {
-                    return <Account account={account}/>
+                    return <Account account={account}>
+                    </Account>
+
                 })}
             </div>
         )

@@ -5,8 +5,7 @@ import accountFormReducer from "./accountFormReducer";
 
 const rootReducer = combineReducers({
     sourceReducer: resourceReducer,
-    sourceFormReducer,
-    accountFormReducer
+    sourceFormReducer
 })
 
 export default rootReducer

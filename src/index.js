@@ -12,13 +12,14 @@ import {getResourceData} from "./redux/actions/resourceAction";
 import {applyMiddleware, createStore} from "redux";
 import rootReducer from "./redux/reducer/root";
 import thunk from "redux-thunk";
+import {store} from "./redux/stores/resourceStore";
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
-store.dispatch(getResourceData())
+const resourceStore = store
+resourceStore.dispatch(getResourceData())
 
 ReactDOM.render(
     <div className="container">
-        <Provider store={store}>
+        <Provider store={resourceStore}>
             <App/>
         </Provider>
     </div>, document.getElementById('root')
