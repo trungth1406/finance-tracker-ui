@@ -22,7 +22,7 @@ export const AddAccountForm = function (props) {
         CreateNewRelatedAccount.call(BaseRequest, formData, undefined).createNewAccount()
             .then(response => {
                 console.log(response)
-            }).error(error => console.log(error));
+            });
 
     }
 

@@ -13,7 +13,7 @@ export const ResourceAction = {
 
 export function getResourceData() {
     return function (dispatch) {
-        return GetResourcesRequest.call(BaseRequest).dispatchRequest().then(data => {
+        return GetResourcesRequest.call(BaseRequest).sendGetRequest().then(data => {
             dispatch(ResourceAction.fetchResources(data));
         })
     }

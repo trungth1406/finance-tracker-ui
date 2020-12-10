@@ -9,9 +9,9 @@ import {AddAccount} from "./components/AddAccount";
 export const App = function (props) {
     let resourceList = []
     const accountResources = useSelector((state) => state.sourceReducer)
-    accountResources.forEach(account => resourceList.push(
-    <AccountResource accountResource={account}>
-        <AddAccount resourceId={account.id}/>
+    accountResources.forEach(resource => resourceList.push(
+    <AccountResource accountResource={resource}>
+        <AddAccount resourceId={resource.id}/>
     </AccountResource>))
 
     return (

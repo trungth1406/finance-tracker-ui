@@ -1,8 +1,5 @@
-import React, {Component, useState} from 'react';
-import {IncomeExpense} from "./IncomeExpense";
+import React, {useState} from 'react';
 import {AddAccountForm} from "./AddAccountForm";
-import {useDispatch, useSelector} from 'react-redux';
-import {AccountFormAction} from '../redux/actions/formAction';
 import {AccountDividerUtils} from "../utils/columnUtils";
 
 export const AddAccount = function (props) {

@@ -1,51 +1,51 @@
 import React, {useState} from 'react'
 import {GetRelatedAccountRequest} from "../services/accountservices";
 import {Account} from "./Account";
-import {AddAccount} from "./AddAccount";
 import {BaseRequest} from "../services/baseService";
-import Provider from "react-redux";
-import {accountStore} from "../redux/stores/resourceStore";
-import {IncomeExpense} from "./IncomeExpense";
 import {AccountDividerUtils} from "../utils/columnUtils";
 
 
 export const AccountResource = function (props) {
+    const [resourceInfo, setResourceInfo] = useState(props.accountResource)
     const [accounts, setAccounts] = useState([]);
     const [isAccountHidden, setAccountHidden] = useState(false);
-    const accountHandler = GetRelatedAccountRequest.call(BaseRequest, setAccounts, props.accountResource.id);
+    const accountRequest = GetRelatedAccountRequest.call(BaseRequest, props.accountResource.id);
 
     const reactAccounts = [];
     accounts.forEach(account => {
-        reactAccounts.push(<Account account={account} resourceId={props.accountResource.id}/>)
+        const accountInfo = Object.assign({}, account, {resourceId: props.accountResource.id})
+        reactAccounts.push(<Account key={account.id} accountInfo={accountInfo} setAccounts={setAccounts}
+                                    setResourceInfo={setResourceInfo()}/>)
     })
     const dividedAccounts = AccountDividerUtils.divide(reactAccounts, true);
+
     return (
         <div>
-            <div id={props.accountResource.id} className="card is-parent box ">
+            <div id={resourceInfo.id} className="card is-parent box ">
                 <div className="columns">
                     <article className="card is-child notification is-primary column"
-                             onClick={() => toggleAccounts(setAccountHidden, setAccounts, isAccountHidden, accountHandler)}>
+                             onClick={() => toggleAccounts(setAccountHidden, setAccounts, isAccountHidden, accountRequest)}>
                         <div className="level">
                             <div className="level-item level-left has-text-centered">
-                                <p className="title">{props.accountResource.name}</p>
+                                <p className="title">{resourceInfo.name}</p>
                             </div>
                             <nav className="level-left">
                                 <div className="level-item  has-text-centered">
                                     <div>
                                         <p className="heading ">Total amount</p>
-                                        <p className="title is-4">{props.accountResource.total_amount}</p>
+                                        <p className="title is-4">{resourceInfo.total_amount}</p>
                                     </div>
                                 </div>
                                 <div className="level-item  has-text-centered">
                                     <div>
                                         <p className="heading ">Remain amount</p>
-                                        <p className="title is-4">{props.accountResource.remain_amount}</p>
+                                        <p className="title is-4">{resourceInfo.remain_amount}</p>
                                     </div>
                                 </div>
                                 <div className="level-item  has-text-centered">
                                     <div>
                                         <p className="heading">Total accounts</p>
-                                        <p className="title is-4 ">{props.accountResource.total_accounts}</p>
+                                        <p className="title is-4 ">{resourceInfo.total_accounts}</p>
                                     </div>
                                 </div>
                             </nav>
@@ -84,7 +84,7 @@ function toggleAccounts(fnToggle, fnSetAccounts, currentState, accountHandler) {
     if (currentState) {
         fnSetAccounts([]);
     } else {
-        accountHandler.dispatchRequest();
+        accountHandler.sendGetAccountRequest().then(response => fnSetAccounts(response));
     }
     fnToggle(!currentState)
 }
