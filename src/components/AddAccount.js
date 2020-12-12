@@ -1,19 +1,26 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {AddAccountForm} from "./AddAccountForm";
 import {AccountDividerUtils} from "../utils/columnUtils";
 
 export const AddAccount = function (props) {
-    // const accountForms = useSelector((state)=> state.accountFormReducer)
-    const [accountForms, setAccountForms] = useState([])
 
+    const [accountForms, setAccountForms] = useState([])
+    const submitForm = {
+        reloadAccounts: props.onFormSubmit.reloadAccounts,
+        reloadResource: props.onFormSubmit.reloadResource
+    }
 
     const removeForm = function (index) {
-        setAccountForms(accountForms.filter(value => value !== accountForms[index]))
+        let remainForms = accountForms.filter((value, i) => i !== index)
+        setAccountForms([...remainForms])
     }
+
     const addFormEvent = function () {
         setAccountForms([...accountForms,
-            <AddAccountForm index={accountForms.length + 1} resourceId={props.resourceId}
-                            removeFormAction={removeForm}/>])
+            <AddAccountForm key={accountForms.length} currentIndex={accountForms.length}
+                            resourceId={props.resourceId}
+                            onFormSubmit={submitForm}
+                            onRemoveForm={removeForm}/>])
     }
 
     const divideAccountForm = AccountDividerUtils.divide(accountForms, false)

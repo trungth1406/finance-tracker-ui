@@ -7,16 +7,17 @@ export const CreateNewResource = function (body, fnCallBack) {
 
 }
 
-export const CreateNewRelatedAccount = function (body, fnCallBack) {
+export const CreateNewRelatedAccount = function (id, body, fnCallBack) {
+    this.uri = 'resources/' + id + '/related_accounts'
     this.body = body;
     this.fnCallBack = fnCallBack;
     return {
-        createNewAccount: this.postRequest.bind(this, this.relatedAccURL, this.body, this.fnCallBack)
+        createNewAccount: this.postRequest.bind(this, this.uri, this.body, this.fnCallBack)
     }
 }
 
 export const DeleteRelatedAccount = function ({resourceId, accountId}, fnCallBack) {
-    this.uri = 'resources/' + resourceId + '/related-accounts/?account_id=' + accountId
+    this.uri = 'resources/' + resourceId + '/related_accounts?account_id=' + accountId
     this.fnCallBack = fnCallBack
     return {
         deleteAccount: this.deleteRequest.bind(this, this.uri, this.fnCallBack)

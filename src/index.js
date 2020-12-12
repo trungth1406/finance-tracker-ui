@@ -9,9 +9,6 @@ import '@fortawesome/fontawesome-free/css/fontawesome.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import {Provider} from "react-redux";
 import {getResourceData} from "./redux/actions/resourceAction";
-import {applyMiddleware, createStore} from "redux";
-import rootReducer from "./redux/reducer/root";
-import thunk from "redux-thunk";
 import {store} from "./redux/stores/resourceStore";
 
 const resourceStore = store

@@ -2,26 +2,38 @@ import React, {createContext, useState} from 'react';
 import {useDispatch} from "react-redux";
 import {BaseRequest} from "../services/baseService";
 import {DeleteRelatedAccount} from "../services/resourceservices";
-import {GetRelatedAccountRequest, GetResourcesRequest} from "../services/accountservices";
+import {GetRelatedAccountsRequest, GetResourceDetailRequest, GetResourcesRequest} from "../services/accountservices";
 
 export const Account = function (props) {
-    const deleteAccount = function () {
-        DeleteRelatedAccount.call(BaseRequest, {
-            resourceId: props.accountInfo.resourceId,
-            accountId: props.accountInfo.id
-        }).deleteAccount().then(() => {
-                const resourceId = props.accountInfo.resourceId
-                const reloadAccount = props.setAccounts
-                GetRelatedAccountRequest.call(BaseRequest, resourceId, (data) => {
-                    reloadAccount([...data])
-                }).sendGetAccountRequest();
 
-                const reloadResource = props.setResourceInfo
-                GetResourcesRequest
-            }
-        );
+    const resourceId = props.accountInfo.resourceId
+    const accountAction = {
+        changeAccount: props.accountStateAction.changeAccount,
+        changeResource: props.accountStateAction.changeResource,
 
     }
+
+    const deleteAccount = function (event) {
+        DeleteRelatedAccount.call(BaseRequest, {
+                resourceId: props.accountInfo.resourceId,
+                accountId: props.accountInfo.id
+            }
+        ).deleteAccount().then(() => {
+            GetRelatedAccountsRequest.call(BaseRequest, resourceId).sendGetAccountRequest().then((data) => {
+                accountAction.changeAccount((prevState) => {
+                    prevState.length = 0;
+                    return data;
+                })
+            });
+
+        }).then(() => {
+            GetResourceDetailRequest.call(BaseRequest, resourceId).sendGetRequest().then((data) => {
+                accountAction.changeResource(data)
+            });
+        });
+
+    }
+
     return (<div className="column is-child is-desktop">
         <div className={`tile is-child `}>
             <div className="card">
@@ -29,10 +41,9 @@ export const Account = function (props) {
                     <p className="card-header-title ">
                         {props.accountInfo.name.toUpperCase()}
                     </p>
-                    <a className="card-header-icon" aria-label="more options"
-                       onClick={() => deleteAccount()}>
+                    <a className="card-header-icon" aria-label="more options">
                           <span className="icon">
-                            <i className="delete is-medium" aria-hidden="true"/>
+                            <i onClick={deleteAccount} className="delete is-medium" aria-hidden="true"/>
                           </span>
                     </a>
                 </header>

@@ -1,23 +1,23 @@
-export const GetResourcesRequest = function (fnCallback) {
+export const GetResourcesRequest = function (fnCallBack) {
     this.uri = 'resources'
-    this.callBackName = fnCallback
+    this.fnCallBack = fnCallBack
     return {
-        sendGetRequest: this.getRequest.bind(this, this.uri, this.callBackName)
+        sendGetRequest: this.getRequest.bind(this, this.uri, this.fnCallBack)
     }
 }
 
 
-export const GetResourceRequest = function (id, fnCallback) {
+export const GetResourceDetailRequest = function (id, fnCallBack) {
     this.uri = `resources/${id}`
-    this.callBackName = fnCallback
+    this.fnCallBack = fnCallBack
     return {
-        sendGetRequest: this.getRequest.bind(this, this.uri, this.callBackName)
+        sendGetRequest: this.getRequest.bind(this, this.uri, this.fnCallBack)
     }
 }
 
-export const GetRelatedAccountRequest = function (id, fnCallback) {
-    this.uri = 'resources/' + id + '/related-accounts'
-    this.fnCallBack = fnCallback === undefined ? undefined : fnCallback
+export const GetRelatedAccountsRequest = function (id, fnCallback) {
+    this.uri = 'resources/' + id + '/related_accounts'
+    this.fnCallBack = fnCallback
     return {
         sendGetAccountRequest: this.getRequest.bind(this, this.uri, this.fnCallBack)
     }

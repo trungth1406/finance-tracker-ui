@@ -1,21 +1,45 @@
-import React, {useState} from 'react'
-import {GetRelatedAccountRequest} from "../services/accountservices";
+import React, {useEffect, useState} from 'react'
+import {GetRelatedAccountsRequest} from "../services/accountservices";
 import {Account} from "./Account";
 import {BaseRequest} from "../services/baseService";
 import {AccountDividerUtils} from "../utils/columnUtils";
+import {AddAccount} from "./AddAccount";
 
 
 export const AccountResource = function (props) {
     const [resourceInfo, setResourceInfo] = useState(props.accountResource)
     const [accounts, setAccounts] = useState([]);
     const [isAccountHidden, setAccountHidden] = useState(false);
-    const accountRequest = GetRelatedAccountRequest.call(BaseRequest, props.accountResource.id);
+
+
+    useEffect(() => {
+        if (accounts) {
+            setAccounts([...accounts])
+        }
+
+    }, [])
+
+    const toggleAccount = function () {
+        if (isAccountHidden) {
+            setAccounts([]);
+        } else {
+            GetRelatedAccountsRequest.call(BaseRequest, props.accountResource.id)
+                .sendGetAccountRequest().then(response => {
+                setAccounts(response)
+            });
+        }
+        setAccountHidden(!isAccountHidden)
+    }
 
     const reactAccounts = [];
-    accounts.forEach(account => {
+    accounts.forEach((account, index) => {
         const accountInfo = Object.assign({}, account, {resourceId: props.accountResource.id})
-        reactAccounts.push(<Account key={account.id} accountInfo={accountInfo} setAccounts={setAccounts}
-                                    setResourceInfo={setResourceInfo()}/>)
+        reactAccounts.push(<Account key={index}
+                                    accountInfo={accountInfo}
+                                    accountStateAction={{
+                                        changeAccount: setAccounts,
+                                        changeResource: setResourceInfo
+                                    }}/>)
     })
     const dividedAccounts = AccountDividerUtils.divide(reactAccounts, true);
 
@@ -24,7 +48,7 @@ export const AccountResource = function (props) {
             <div id={resourceInfo.id} className="card is-parent box ">
                 <div className="columns">
                     <article className="card is-child notification is-primary column"
-                             onClick={() => toggleAccounts(setAccountHidden, setAccounts, isAccountHidden, accountRequest)}>
+                             onClick={() => toggleAccount()}>
                         <div className="level">
                             <div className="level-item level-left has-text-centered">
                                 <p className="title">{resourceInfo.name}</p>
@@ -54,37 +78,13 @@ export const AccountResource = function (props) {
                     </article>
                 </div>
                 {dividedAccounts}
-                {props.children}
+                <AddAccount resourceId={props.accountResource.id}
+                            onFormSubmit={{reloadAccounts: setAccounts, reloadResource: setResourceInfo}}
+                />
             </div>
 
         </div>
     );
 }
 
-function accountDivider(accounts) {
-    const jsxAccount = []
-    let start = 0, end = 2;
-    while (start < end) {
-        const eachRow = accounts.slice(start, end);
-        jsxAccount.push(<div className="tile is-ancestor columns">
-                {eachRow.map((account, id) => {
-                    return <Account account={account}>
-                    </Account>
 
-                })}
-            </div>
-        )
-        start = end;
-        end = end + 2 >= accounts.length ? accounts.length : end + 2;
-    }
-    return jsxAccount;
-}
-
-function toggleAccounts(fnToggle, fnSetAccounts, currentState, accountHandler) {
-    if (currentState) {
-        fnSetAccounts([]);
-    } else {
-        accountHandler.sendGetAccountRequest().then(response => fnSetAccounts(response));
-    }
-    fnToggle(!currentState)
-}
