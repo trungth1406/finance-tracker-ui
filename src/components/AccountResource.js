@@ -38,7 +38,8 @@ export const AccountResource = function (props) {
                                     accountInfo={accountInfo}
                                     accountStateAction={{
                                         changeAccount: setAccounts,
-                                        changeResource: setResourceInfo
+                                        changeResource: setResourceInfo,
+                                        setModalActive: props.setModalActive
                                     }}/>)
     })
     const dividedAccounts = AccountDividerUtils.divide(reactAccounts, true);
@@ -79,7 +80,10 @@ export const AccountResource = function (props) {
                 </div>
                 {dividedAccounts}
                 <AddAccount resourceId={props.accountResource.id}
-                            onFormSubmit={{reloadAccounts: setAccounts, reloadResource: setResourceInfo}}
+                            onFormSubmit={{
+                                reloadAccounts: setAccounts,
+                                reloadResource: setResourceInfo
+                            }}
                 />
             </div>
 

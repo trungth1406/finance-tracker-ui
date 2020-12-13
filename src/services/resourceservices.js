@@ -1,4 +1,5 @@
 export const CreateNewResource = function (body, fnCallBack) {
+    this.uri = 'resources'
     this.body = body
     this.fnCallBack = fnCallBack;
     return {
