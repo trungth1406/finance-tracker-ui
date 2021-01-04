@@ -1,9 +1,8 @@
-import React, {createContext, useState} from 'react';
-import {useDispatch} from "react-redux";
-import {BaseRequest} from "../services/baseService";
-import {DeleteRelatedAccount} from "../services/resourceservices";
-import {GetRelatedAccountsRequest, GetResourceDetailRequest, GetResourcesRequest} from "../services/accountservices";
-
+import React, { useState } from 'react';
+import { BaseRequest } from "../services/baseService";
+import { DeleteRelatedAccount } from "../services/resourceservices";
+import { GetRelatedAccountsRequest, GetResourceDetailRequest } from "../services/accountservices";
+import { Transactions } from './Transactitons'
 
 export const Account = function (props) {
     const resourceId = props.accountInfo.resourceId
@@ -13,11 +12,13 @@ export const Account = function (props) {
         setModalActive: props.accountStateAction.setModalActive
     }
 
-    const deleteAccount = function (event) {
+    const [transactions, setTransactions] = useState({ obj: null });
+
+    const deleteAccount = function () {
         DeleteRelatedAccount.call(BaseRequest, {
-                resourceId: props.accountInfo.resourceId,
-                accountId: props.accountInfo.id
-            }
+            resourceId: props.accountInfo.resourceId,
+            accountId: props.accountInfo.id
+        }
         ).deleteAccount().then(() => {
             GetRelatedAccountsRequest.call(BaseRequest, resourceId).sendGetAccountRequest().then((data) => {
                 accountAction.changeAccount((prevState) => {
@@ -35,7 +36,8 @@ export const Account = function (props) {
     }
 
 
-    return (<div className="column is-child is-desktop">
+    return (<>
+        <div className="column is-child is-desktop">
             <div className={`tile is-child `}>
                 <div className="card">
                     <header className="card-header has-text-centered">
@@ -43,9 +45,9 @@ export const Account = function (props) {
                             {props.accountInfo.name.toUpperCase()}
                         </p>
                         <a className="card-header-icon" aria-label="more options">
-                          <span className="icon">
-                            <i onClick={deleteAccount} className="delete is-medium" aria-hidden="true"/>
-                          </span>
+                            <span className="icon">
+                                <i onClick={deleteAccount} className="delete is-medium" aria-hidden="true" />
+                            </span>
                         </a>
                     </header>
 
@@ -69,25 +71,22 @@ export const Account = function (props) {
                     </div>
                     <footer className="card-footer">
                         <p className="card-footer-item has-text-primary ">
-                                <span className="control is-left">
-                                    <i className="fas fa-exchange-alt is-large"/>
-                                </span>
+                            <span className="control is-left">
+                                <i className="fas fa-exchange-alt is-large" />
+                            </span>
 
                         </p>
                         <p className="card-footer-item has-text-info "
-                           onClick={() => {
-                               console.log("CLICKED")
-                               accountAction.setModalActive((prevState)=> {
-                                   return !prevState
-                               })
-                           }}>
-                            <i className="fas fa-info is-large"/>
+                            onClick={() => {
+                                setTransactions({ obj: <Transactions accountId={props.accountInfo.id} remove={setTransactions}  /> })
+                            }} >
+                            <i className="fas fa-info is-large" />
                         </p>
                     </footer>
 
                 </div>
             </div>
-
         </div>
-    )
+        { transactions.obj}
+    </>)
 }

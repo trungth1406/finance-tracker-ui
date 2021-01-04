@@ -24,3 +24,11 @@ export const GetRelatedAccountsRequest = function (id, fnCallback) {
 }
 
 
+
+export const GetRelatedTransaction = function (pk, fnCallBack) {
+    this.uri = 'accounts/' + pk + '/related_transactions';
+    this.fnCallBack = fnCallBack;
+    return {
+        sendGetTransactionRequest: this.getRequest.bind(this, this.uri, this.fnCallBack)
+    }
+}

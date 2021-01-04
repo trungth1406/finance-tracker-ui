@@ -8,8 +8,8 @@
     "@testing-library/react": "^11.2.1",
     "@testing-library/user-event": "^12.2.2",
     "axios": "^0.21.0",
-    "bulma": "^0.9.1",
-    "node-sass": "^4.0.0",
+    "bulma-calendar": "^6.0.9",
+    "jquery": "^3.5.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-hook-form": "^6.12.1",
@@ -21,7 +21,9 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "react-scripts start npm run css-watch",
+    "css-build": "node-sass --omit-source-map-url src/sass/index.scss src/sass/index.css",
+    "css-watch": "npm run css-build -- --watch",
+    "start": " react-scripts start ",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -43,5 +45,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "bulma": "^0.9.1",
+    "node-sass": "^4.14.1"
   }
 }

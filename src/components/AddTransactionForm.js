@@ -1,38 +1,31 @@
-import React, {useContext, useState} from 'react'
-import {FormHandler} from '../services/formservices'
-import {AccountContext} from "./IncomeExpense";
+import React, { useState } from 'react'
+import { FormHandler } from '../services/formservices'
 
 
-export const AddTransactionForm = (props) => {
+export const AddTransactionForm = () => {
     const [transaction, setTransaction] = useState('');
     const [amount, setAmount] = useState(0);
-    const [accountType, setAccountType] = useState(0);
-    // const context = useContext(AccountContext.accountInfo);
-    // console.log(context)
-    // setAccountType(context.accountInfo);
+
+    const formHandler = Object.create(FormHandler);
+    setTransaction.bind(formHandler);
+    console.log(formHandler.changeText());
+
     return (
         <div>
-            <h3 className="title is-4">Add new transaction</h3>
-            <div className="tile box">
-                <div className="field column is-parent is-6">
-                    <div className="control">
-                        <input className="input is-6" type="text" placeholder="Name"
-                               onChange={(e)=> setTransaction(e.target.value)}/>
-                    </div>
-                </div>
-                <div className="field column is-parent is-6">
-                    <div className="control">
-                        <input className="input" type="text" placeholder="Amount"
-                               onChange={(e)=> setAmount(e.target.value)}/>
+            <h3 className="title">Add new transaction</h3>
+            <form id="form">
+                <div className="field">
+                    <label className="label">Label</label>
+                    <div className="control is-6">
+                        <input className="input is-6" type="text" placeholder="Name" onChange={formHandler.setText} />
                     </div>
 
+                    <div className="control is-6">
+                        <input className="input is-6" type="text" placeholder="Amount" onChange={formHandler.changeAmount} />
+                    </div>
+                    <button className="button" formHandler={FormHandler.submit}>Add</button>
                 </div>
-
-            </div>
-            <div className="field column is-parent is-6 ">
-                <button className="button is-primary" onClick={FormHandler.submit}>Add</button>
-            </div>
-
+            </form>
         </div>
     )
 }
